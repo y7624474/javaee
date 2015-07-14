@@ -1,0 +1,22 @@
+apply plugin: 'java'
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.flywaydb:flyway-gradle-plugin:3.2.1"
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.10'
+}
+
+apply plugin: 'org.flywaydb.flyway'
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306/userinfo'
+    user = 'root'
+    password='yy'
+    baselineOnMigrate = true
+}

@@ -1,0 +1,27 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/userinfo</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">yy</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- 最小的Connection數目 -->
+        <property name="c3p0.min_size">5</property>
+        <!-- 最大的Connection數目 -->
+        <property name="c3p0.max_size">20</property>
+        <!-- 允許的idle時間 -->
+        <property name="c3p0.timeout">300</property>
+        <!-- 最大的Statement數目 -->
+        <property name="c3p0.max_statements">50</property>
+        <!-- idle的測試週期 -->
+        <property name="c3p0.idle_test_period">3000</property>
+
+        <mapping resource="User.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
