@@ -87,6 +87,7 @@
   %>
   <tr>
     <td><%=user.getUsername()%></td>
+    <%--<td><%=user.getPassword()%></td>--%>
   </tr>
   <%
     }

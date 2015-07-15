@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
+import java.security.*;
 import java.util.List;
 import javax.servlet.http.*;
 /**
@@ -41,17 +43,48 @@ public class usercontrol {
     }
 
     @RequestMapping("/register")
-    public ModelAndView registuser(@RequestParam ("username") String name)
-    {
+    public ModelAndView registuser(@RequestParam ("username") String name,@RequestParam ("password") String pwd) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         User user = new User();
         user.setUsername(name);
-
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(pwd.getBytes("UTF8"));
+        byte resultData[] = md.digest();
+        String strresult=convertToHexString(resultData);
+        user.setPassword(strresult);
         UserDao userdao=new UserDao();
         userdao.addUser(user);
+
         getAllUser();
         return new ModelAndView("redirect:/usertable");
     }
 
+    static String convertToHexString(byte data[]) {
+        StringBuffer strBuffer = new StringBuffer();
+        for (int i = 0; i < data.length; i++) {
+            strBuffer.append(Integer.toHexString(0xff & data[i]));
+        }
+        return strBuffer.toString();
+    }
+
+    public boolean verify(String name,String pwd) throws NoSuchAlgorithmException, UnsupportedEncodingException
+    {
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(pwd.getBytes("UTF8"));
+        byte resultData[] = md.digest();
+        String password_md5=convertToHexString(resultData);
+        UserDao userdao=new UserDao();
+        List<User> users = userdao.queryAllUsers();
+        for (User useri : users)
+        {
+            if(useri.getUsername().equals(name))
+            {
+                if(useri.getPassword().equals(password_md5))
+                    return true;
+
+            }
+        }
+        return false;
+    }
 
     @RequestMapping("/usertable/del")
     public ModelAndView deluser(@RequestParam ("username") String name)
@@ -107,13 +140,12 @@ public class usercontrol {
 
     }
 
+
+
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView login(HttpServletRequest request,HttpServletResponse response,@RequestParam ("loginname") String name,@RequestParam ("password") String password)
-    {
-        request.getSession().setAttribute("sessionname",name);     //用Session保存用户名
-        request.getSession().setAttribute("sessionpwd", password);
-        System.out.print("0");
-        if(name.equals("yy"))//做一些数据库验证
+    public ModelAndView login(HttpServletRequest request,HttpServletResponse response,@RequestParam ("loginname") String name,@RequestParam ("password") String password) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+
+        if(verify(name,password))//做一些数据库验证
         {
 
             request.getSession().setAttribute("Login", "OK");

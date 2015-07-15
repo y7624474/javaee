@@ -8,6 +8,6 @@
             <column name="username"></column>
             <generator class="assigned"/>
         </id>
-        <!--<property name="username"/>-->
+        <property name="password"></property>
     </class>
 </hibernate-mapping>
