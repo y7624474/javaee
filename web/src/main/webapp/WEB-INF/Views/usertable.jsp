@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tw.core.entity.User" %>
 <%@ page import="java.util.List" %>
+<%@ page import="javax.servlet.http.*" %>
 <html>
 <head>
   <title></title>
@@ -35,19 +36,12 @@
 </script>
 <body>
 
-<form method="post" action='/web/usertable' method='post'>
-  <table style="margin: auto">
-    <tr>
-      <td>姓名:</td>
-      <td><input name="username" type="text"/></td>
-      <td><input name="submit" type="submit" value="添加" /></td>
 
-    </tr>
-  </table>
-</form>
-<%
-  List<User> users = (List<User>) request.getAttribute("userList");
-%>
+
+
+
+
+
 <form method="post" action='/web/usertable/del' method='post'>
   <table style="margin: auto">
     <tr>
@@ -68,6 +62,26 @@
   <%--<td><%=userCrs.getString("username")%></td>--%>
   <%--<td>[<a href="UserHandleServlet?id=<%=userCrs.getInt("id")%>&handle=delete">删除</a>]</td>--%>
   <%--</tr>--%>
+
+  <%String Login = (String)request.getSession().getAttribute("Login");
+
+    if (Login != null && Login.equals("OK"))
+    {
+      //request.getSession().invalidate();
+    }
+    else
+    {
+      System.out.print("w");
+      String url="/usertable";
+      Cookie cookie_url = new Cookie("url_jump", url);
+      cookie_url.setPath("/");
+      response.addCookie(cookie_url);
+      response.setHeader("Refresh","0;URL=/web");
+    }
+  %>
+  <%
+    List<User> users = (List<User>) request.getAttribute("userList");
+  %>
   <%
     for (User user : users) {
   %>
@@ -78,6 +92,24 @@
     }
   %>
 </table>
+
+</br>
+<form method="post" action='/web/regist' method='post'>
+  <table style="margin: auto">
+    <tr>
+      <td><input name="submit" type="submit" value="注册新用户" /></td>
+
+    </tr>
+  </table>
+</form>
+
+<form method="post" action='/web/usertable/quit' method='post'>
+  <table style="float: right">
+    <tr>
+      <td><input name="submit" type="submit" value="退出登录" /></td>
+    </tr>
+  </table>
+</form>
 <%--</form>--%>
 
 </body>

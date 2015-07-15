@@ -7,7 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.tw.core.entity.User" %>
-<%@ page import="java.util.List" %>
+<%@ page import="javax.servlet.http.*" %>
 <html>
 <head>
     <title></title>
@@ -18,7 +18,9 @@
 
 </script>
 <body>
+<%
 
+%>
 
 <form method="post" action="">
     <table id="login" style="border: groove;margin: auto"  >
@@ -33,5 +35,6 @@
         </tr>
     </table>
 </form>
+
 </body>
 </html>

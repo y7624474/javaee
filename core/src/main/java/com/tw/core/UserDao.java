@@ -3,12 +3,14 @@ package com.tw.core;
 import com.tw.core.entity.User;
 import com.tw.core.util.HibernateUtil;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * Created by cheny on 7/8/15.
  */
+//@Repository
 public class UserDao {
 
     public void addUser(User user) {
