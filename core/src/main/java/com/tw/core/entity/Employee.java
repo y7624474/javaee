@@ -7,7 +7,16 @@ public class Employee {
 
     private String role;
     private String name;
+    private int num;
     private Integer idEmployee;
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
+    }
 
     public String getRole() {
         return role;

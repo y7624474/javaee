@@ -13,15 +13,15 @@
     <title></title>
 </head>
 <body>
-<form method="post" action='/web/home/user/del'>
-  <table style="margin: auto">
-    <tr>
-      <td>姓名:</td>
-      <td><input name="username" type="text"/></td>
-      <td><input name="submit" type="submit" value="删除" /></td>
-    </tr>
-  </table>
-</form>
+<%--<form method="post" action='/web/home/user/del'>--%>
+  <%--<table style="margin: auto">--%>
+    <%--<tr>--%>
+      <%--<td>姓名:</td>--%>
+      <%--<td><input name="username" type="text"/></td>--%>
+      <%--<td><input name="submit" type="submit" value="删除" /></td>--%>
+    <%--</tr>--%>
+  <%--</table>--%>
+<%--</form>--%>
 
 <%--<form method="get" action='/web/usertable' method='get'>--%>
 <table id="usrtable" style="border: groove;margin: auto"  >
@@ -69,9 +69,12 @@
     for (User user : users) {
   %>
   <tr>
+
     <td><%=user.getUsername()%></td>
     <td><%=user.getEmail()%></td>
-    <%--<td><%=user.getPassword()%></td>--%>
+    <td><a href="/web/home/user/<%=user.getIdUser()%>">删除</a>></td>
+
+  <%--<td><%=user.getPassword()%></td>--%>
   </tr>
   <%
     }

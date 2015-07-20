@@ -14,7 +14,7 @@
 </head>
 <body>
 
-<form method="get" action='/web/class' >
+<form method="get" action='/web/home/class' >
   <table id="classtable" style="border: groove;margin: auto"  >
     <tr>
       <td id="ClassId" style="display: none">id</td>
@@ -33,6 +33,7 @@
       <td><%=cls.getClassname()%></td>
       <td><%=cls.getTime()%></td>
       <td><%=cls.getCoach()%></td>
+      <td><a href="/web/home/class/<%=cls.getIdClass()%>">删除</a>></td>
 
       <%--<td><%=user.getPassword()%></td>--%>
     </tr>

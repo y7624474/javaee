@@ -49,6 +49,15 @@ public class UserDao {
         session.close();
     }
 
+    public static <T> T getById(Class<T> clazz, int id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        T t = (T) session.get(clazz, id);
+        session.getTransaction().commit();
+        session.close();
+        return t;
+    }
+
     public void addEmp(Employee emp) {
         commitEmp(emp, "add");
     }

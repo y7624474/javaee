@@ -13,12 +13,12 @@
     <title></title>
 </head>
 <body>
-<form method="get" action='/web/customer' >
+<form method="get" action='/web/home/customer' >
   <table id="custable" style="border: groove;margin: auto"  >
     <tr>
       <td id="CusId" style="display: none">id</td>
       <td style="background-color: #cccccc">顾客</td>
-      <td style="background-color: #cccccc">教练</td>
+      <td style="background-color: #cccccc">私教</td>
     </tr>
     <%
       List<Customer> cuss = (List<Customer>) request.getAttribute("cusList");
@@ -30,6 +30,7 @@
 
       <td><%=cus.getCustomer()%></td>
       <td><%=cus.getCoach()%></td>
+      <td><a href="/web/home/customer/<%=cus.getIdCustomer()%>">删除</a>></td>
 
       <%--<td><%=user.getPassword()%></td>--%>
     </tr>
@@ -46,7 +47,7 @@
       <td><input name="customer" type="text"/></td>
     </tr>
     <tr>
-      <td>教练:</td>
+      <td>私教:</td>
       <td><input name="coach" type="text"/></td>
 
       <td><input name="submit" type="submit" value="添加" /></td>

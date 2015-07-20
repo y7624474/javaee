@@ -6,7 +6,7 @@
     <class name="com.tw.core.entity.User" table="User">
         <id name="idUser">
             <column name="idUser" />
-            <generator class="native" />
+            <generator class="assigned" />
         </id>
         <property name="email"></property>
         <property name="username"></property>
@@ -19,6 +19,7 @@
         </id>
         <property name="name"></property>
         <property name="role"></property>
+        <property name="num"></property>
     </class>
     <class name="com.tw.core.entity.Classinfo" table="Class">
         <id name="idClass">

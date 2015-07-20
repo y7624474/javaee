@@ -16,6 +16,11 @@
 <form method="post" action='/web/regist' method='post'>
   <table style="margin: auto">
     <tr>
+      <td>工号:</td>
+      <td><input name="num" type="text"/></td>
+    </tr>
+    <tr>
+    <tr>
       <td>用户名:</td>
       <td><input name="username" type="text"/></td>
       </tr>

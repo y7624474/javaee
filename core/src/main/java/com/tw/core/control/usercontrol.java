@@ -6,8 +6,10 @@ import com.tw.core.entity.Customer;
 import com.tw.core.entity.Employee;
 import com.tw.core.entity.User;
 import org.hibernate.Session;
+import org.hibernate.annotations.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,11 +45,11 @@ public class usercontrol {
     }
 
 //用户管理
-    @RequestMapping("/home/user/del")
-    public ModelAndView deluser(@RequestParam ("username") String username)
+    @RequestMapping(value="/home/user/{id}")
+    public ModelAndView deluser(@PathVariable Integer id)
     {
         User user = new User();
-        user.setUsername(username);
+        user.setIdUser(id);
 
         userdao.deleteUser(user);
         getUser();
@@ -71,19 +73,27 @@ public class usercontrol {
 
     @RequestMapping(value = "/home/regist_emp/add", method = RequestMethod.POST)
     public ModelAndView addEmUser(@RequestParam ("name") String name,
-                                  @RequestParam ("role") String role){
+                                  @RequestParam ("role") String role,
+                                  @RequestParam ("num") String num
+                                  ){
         Employee emp=new Employee();
+
         emp.setName(name);
         emp.setRole(role);
+        emp.setNum(Integer.parseInt(num));
         getAllEmUser();
         userdao.addEmp(emp);
         return new ModelAndView("redirect:/home/regist_emp");
     }
 
-    @RequestMapping(value = "/home/regist_emp/del", method = RequestMethod.POST)
-    public ModelAndView delEmUser(@RequestParam ("name") String name) {
-        Employee emp=new Employee();
-        emp.setName(name);
+    @RequestMapping(value = "/home/regist_emp/{id}")
+    public ModelAndView delEmUser(@PathVariable Integer id) {
+
+
+        Employee emp=userdao.getById(Employee.class,id);
+        User user=userdao.getById(User.class,emp.getNum());
+        userdao.deleteUser(user);
+        emp.setIdEmployee(id);
         userdao.delEmp(emp);
         getAllEmUser();
 
@@ -119,10 +129,10 @@ public class usercontrol {
         return new ModelAndView("redirect:/home/class");
     }
 
-    @RequestMapping(value = "/home/class/del", method = RequestMethod.POST)
-    public ModelAndView delCls(@RequestParam ("classname") String clsname) {
+    @RequestMapping(value = "/home/class/{id}")
+    public ModelAndView delCls(@PathVariable Integer id) {
         Classinfo cls=new Classinfo();
-        cls.setClassname(clsname);
+        cls.setIdClass(id);
         userdao.delCls(cls);
         getAllCls();
 
@@ -156,12 +166,12 @@ public class usercontrol {
         return new ModelAndView("redirect:/home/customer");
     }
 
-    @RequestMapping(value = "/home/customer/del", method = RequestMethod.POST)
-    public ModelAndView delCus(@RequestParam ("classname") String clsname) {
-        Classinfo cls=new Classinfo();
-        cls.setClassname(clsname);
-        userdao.delCls(cls);
-        getAllCls();
+    @RequestMapping(value = "/home/customer/{id}")
+    public ModelAndView delCus(@PathVariable Integer id) {
+        Customer cus=new Customer();
+        cus.setIdCustomer(id);
+        userdao.delCus(cus);
+        getAllCus();
 
         return new ModelAndView("redirect:/home/customer");
     }
@@ -175,6 +185,7 @@ public class usercontrol {
     }
 
 //登录
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView start()
     {
@@ -226,21 +237,34 @@ public class usercontrol {
     public ModelAndView registUser(@RequestParam ("username") String username,
                                    @RequestParam ("password") String pwd,
                                    @RequestParam ("email") String email,
+                                   @RequestParam ("num") String num,
                                    HttpServletResponse response
     ) throws NoSuchAlgorithmException, IOException {
-        User user = new User();
-        user.setEmail(email);
-        user.setUsername(username);
-        user.setPassword(pwd);
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(pwd.getBytes("UTF8"));
-        byte resultData[] = md.digest();
-        String strresult=convertToHexString(resultData);
-        user.setPassword(strresult);
-        userdao.addUser(user);
+        int emnum=Integer.parseInt(num);
         PrintWriter out = response.getWriter();
-        out.println("注册成功！");
-        return new ModelAndView("redirect:/");
+        if(registverify(emnum)) {
+            User user = new User();
+
+//        user.setIdUser(user.getEmp().getNum());
+            user.setIdUser(emnum);
+            user.setEmail(email);
+            user.setUsername(username);
+            user.setPassword(pwd);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(pwd.getBytes("UTF8"));
+            byte resultData[] = md.digest();
+            String strresult = convertToHexString(resultData);
+            user.setPassword(strresult);
+            userdao.addUser(user);
+
+            out.println("注册成功！");
+            return new ModelAndView("redirect:/");
+        }
+        else
+        {
+            out.println("注册失败！");
+            return new ModelAndView("registuser");
+        }
     }
 
 
@@ -280,6 +304,27 @@ public class usercontrol {
 
             }
         }
+        return false;
+    }
+    private boolean registverify(int num)
+    {
+        List<Employee> emps = userdao.queryAllEmUsers();
+        List<User> us = userdao.queryAllUsers();
+        for (User u : us)
+        {
+            if(u.getIdUser()==num)
+            {
+                return false;
+            }
+        }
+        for (Employee emp : emps)
+        {
+            if(emp.getNum()==num)
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
