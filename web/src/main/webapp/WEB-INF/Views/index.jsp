@@ -36,5 +36,11 @@
     </table>
 </form>
 
+    <table style="margin: auto">
+        <tr>
+            <td><a href="regist" >注册新用户</a></td>
+
+        </tr>
+    </table>
 </body>
 </html>

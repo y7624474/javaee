@@ -12,43 +12,36 @@
 </head>
 <body>
 
-<%String Login = (String)request.getSession().getAttribute("Login");
 
-  if (Login != null && Login.equals("OK"))
-  {
-    //request.getSession().invalidate();
-  }
-  else
-  {
-    System.out.print("w");
-    String url="/regist";
-    Cookie cookie_url = new Cookie("url_jumpregist", url);
-    cookie_url.setPath("/");
-    response.addCookie(cookie_url);
-    response.setHeader("Refresh","0;URL=/web");
-  }
-%>
-<form method="post" action='/web/register' method='post'>
+<form method="post" action='/web/regist' method='post'>
   <table style="margin: auto">
     <tr>
-      <td>姓名:</td>
+      <td>用户名:</td>
       <td><input name="username" type="text"/></td>
-    <td>密码：:</td>
-    <td><input name="password" type="password"/></td>
+      </tr>
+    <tr>
+      <td>密码:</td>
+      <td><input name="password" type="password"/></td>
+    </tr>
+    <tr>
+      <td>邮箱:</td>
+      <td><input name="email" type="text"/></td>
+    </tr>
+    <tr>
       <td><input name="submit" type="submit" value="注册" /></td>
 
     </tr>
   </table>
 </form>
 
-<form method="post" action='/web/regist/quit' method='post'>
+<%--<form method="post" action='/web/regist/quit' method='post'>--%>
   <table style="float: right">
-    <tr>
-      <td><a href="usertable" >返回</a></td>
-      <td><input name="submit" type="submit" value="退出登录" /></td>
+    <%--<tr>--%>
+      <td><a href="/web" >返回</a></td>
+      <%--<td><input name="submit" type="submit" value="退出登录" /></td>--%>
 
-    </tr>
+    <%--</tr>--%>
   </table>
-</form>
+<%--</form>--%>
 </body>
 </html>

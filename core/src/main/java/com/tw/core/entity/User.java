@@ -6,8 +6,28 @@ package com.tw.core.entity;
 
 public class User {
 
+    private String email;
     private String username;
     private String password;
+    private Integer idUser;
+
+    public Integer getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Integer idUser) {
+        this.idUser = idUser;
+    }
+
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getPassword() {
         return password;
@@ -17,14 +37,7 @@ public class User {
         this.password = password;
     }
 
-    public User(){
 
-    }
-
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     public String getUsername() {
         return username;

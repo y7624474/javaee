@@ -3,11 +3,38 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.tw.core.entity.User" table="user">
-        <id name="username" type="string">
-            <column name="username"></column>
-            <generator class="assigned"/>
+    <class name="com.tw.core.entity.User" table="User">
+        <id name="idUser">
+            <column name="idUser" />
+            <generator class="native" />
         </id>
+        <property name="email"></property>
+        <property name="username"></property>
         <property name="password"></property>
+    </class>
+    <class name="com.tw.core.entity.Employee" table="Employee">
+        <id name="idEmployee">
+            <column name="idEmployee" />
+            <generator class="native" />
+        </id>
+        <property name="name"></property>
+        <property name="role"></property>
+    </class>
+    <class name="com.tw.core.entity.Classinfo" table="Class">
+        <id name="idClass">
+            <column name="idClass" />
+            <generator class="native" />
+        </id>
+        <property name="classname"></property>
+        <property name="time"></property>
+        <property name="coach"></property>
+    </class>
+    <class name="com.tw.core.entity.Customer" table="Customer">
+        <id name="idCustomer">
+            <column name="idCustomer" />
+            <generator class="native" />
+        </id>
+        <property name="customer"></property>
+        <property name="coach"></property>
     </class>
 </hibernate-mapping>

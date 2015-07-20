@@ -40,28 +40,27 @@
 
 
 
-
-
-<form method="post" action='/web/usertable/del' method='post'>
+<%--<form method="post" action='/web/' method='post'>--%>
   <table style="margin: auto">
     <tr>
-      <td>姓名:</td>
-      <td><input name="username" type="text"/></td>
-      <td><input name="submit" type="submit" value="删除" /></td>
+      <td>健身房管理系统</td>
+    </tr>
+    </table>
+
+<table style="margin: auto">
+    <tr style="margin-top: 30px;">
+      <td><a href="home/regist_emp">雇员登记</a></td>
+      <td><a href="home/class">课程信息</a></td>
+      <td><a href="home/private">私教预约查询</a></td>
+      <td><a href="home/customer">顾客信息</a></td>
+      <td><a href="home/user">用户管理</a></td>
+
+    <%--<td><input name="submit" type="submit" value="雇员登记" /></td>--%>
     </tr>
   </table>
-</form>
+<%--</form>--%>
 
-<%--<form method="get" action='/web/usertable' method='get'>--%>
-<table id="usrtable" style="border: groove;margin: auto"  >
-  <tr>
-    <td id="listUserId" style="display: none">id</td>
-    <td style="background-color: #cccccc">姓名</td>
-  </tr>
-  <%--<tr>--%>
-  <%--<td><%=userCrs.getString("username")%></td>--%>
-  <%--<td>[<a href="UserHandleServlet?id=<%=userCrs.getInt("id")%>&handle=delete">删除</a>]</td>--%>
-  <%--</tr>--%>
+
 
   <%String Login = (String)request.getSession().getAttribute("Login");
 
@@ -71,40 +70,28 @@
     }
     else
     {
-      System.out.print("w");
-      String url="/usertable";
-      Cookie cookie_url = new Cookie("url_jump", url);
-      cookie_url.setPath("/");
-      response.addCookie(cookie_url);
+      Cookie[] cookieid=request.getCookies();
+      String url="/home";
+      for(int i=0;i<cookieid.length;i++) {
+        if (cookieid[i].getName().equals("url_jump"))
+        {
+          cookieid[i].setValue(url);
+        }
+        else
+        {
+          Cookie cookie_url = new Cookie("url_jump", url);
+          cookie_url.setPath("/");
+          response.addCookie(cookie_url);
+        }
+      }
+
       response.setHeader("Refresh","0;URL=/web");
     }
   %>
-  <%
-    List<User> users = (List<User>) request.getAttribute("userList");
-  %>
-  <%
-    for (User user : users) {
-  %>
-  <tr>
-    <td><%=user.getUsername()%></td>
-    <%--<td><%=user.getPassword()%></td>--%>
-  </tr>
-  <%
-    }
-  %>
-</table>
 
-</br>
-<form method="post" action='/web/regist' method='post'>
-  <table style="margin: auto">
-    <tr>
-      <td><input name="submit" type="submit" value="注册新用户" /></td>
 
-    </tr>
-  </table>
-</form>
 
-<form method="post" action='/web/usertable/quit' method='post'>
+<form method="post" action='/web/home/user/quit'>
   <table style="float: right">
     <tr>
       <td><input name="submit" type="submit" value="退出登录" /></td>
