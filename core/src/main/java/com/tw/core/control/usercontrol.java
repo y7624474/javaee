@@ -38,13 +38,15 @@ public class usercontrol {
         return new ModelAndView("home","userList",users);
     }
 
+//用户管理
     @RequestMapping(value = "/home/user", method = RequestMethod.GET)
     public ModelAndView getUser() {
         List<User> users = userdao.queryAllUsers();
+
         return new ModelAndView("user","userList",users);
     }
 
-//用户管理
+
     @RequestMapping(value="/home/user/{id}")
     public ModelAndView deluser(@PathVariable Integer id)
     {
@@ -80,19 +82,21 @@ public class usercontrol {
 
         emp.setName(name);
         emp.setRole(role);
-        emp.setNum(Integer.parseInt(num));
-        getAllEmUser();
+        emp.setIdEmployee(Integer.parseInt(num));
+
         userdao.addEmp(emp);
+        getAllEmUser();
         return new ModelAndView("redirect:/home/regist_emp");
     }
 
     @RequestMapping(value = "/home/regist_emp/{id}")
     public ModelAndView delEmUser(@PathVariable Integer id) {
 
-
-        Employee emp=userdao.getById(Employee.class,id);
-        User user=userdao.getById(User.class,emp.getNum());
-        userdao.deleteUser(user);
+//
+        Employee emp=new Employee();
+//        User user=userdao.getBynum(User.class,id);
+//        userdao.deleteUser(user);
+//        Employee emp=new Employee();
         emp.setIdEmployee(id);
         userdao.delEmp(emp);
         getAllEmUser();
@@ -111,8 +115,16 @@ public class usercontrol {
 //课程信息
     @RequestMapping(value = "/home/class", method = RequestMethod.GET)
     public ModelAndView getAllCls() {
-    List<Classinfo> cls = userdao.queryAllCls();
-    return new ModelAndView("class","clsList",cls);
+        ModelAndView modeandview=new ModelAndView();
+
+        List<Classinfo> cls = userdao.queryAllCls();
+        List<Employee> coach=userdao.queryCoach();
+        modeandview.setViewName("class");
+        modeandview.addObject("clsList", cls);
+        modeandview.addObject("coach",coach);
+
+
+        return modeandview;
 }
 
 
@@ -124,8 +136,9 @@ public class usercontrol {
         cls.setClassname(clsname);
         cls.setTime(time);
         cls.setCoach(coach);
-        getAllCls();
+
         userdao.addCls(cls);
+        getAllCls();
         return new ModelAndView("redirect:/home/class");
     }
 
@@ -138,7 +151,6 @@ public class usercontrol {
 
         return new ModelAndView("redirect:/home/class");
     }
-
 
     @RequestMapping("/home/class/quit")
     public ModelAndView quitcls(HttpServletRequest request,HttpServletResponse response)
@@ -238,15 +250,15 @@ public class usercontrol {
                                    @RequestParam ("password") String pwd,
                                    @RequestParam ("email") String email,
                                    @RequestParam ("num") String num,
+
                                    HttpServletResponse response
     ) throws NoSuchAlgorithmException, IOException {
         int emnum=Integer.parseInt(num);
         PrintWriter out = response.getWriter();
         if(registverify(emnum)) {
             User user = new User();
-
-//        user.setIdUser(user.getEmp().getNum());
-            user.setIdUser(emnum);
+            Employee emp=userdao.getById(Employee.class,emnum);
+            user.setEmp(emp);
             user.setEmail(email);
             user.setUsername(username);
             user.setPassword(pwd);
@@ -267,7 +279,63 @@ public class usercontrol {
         }
     }
 
+//私教预约
 
+    @RequestMapping(value = "/home/private", method = RequestMethod.GET)
+    public ModelAndView getPrivate() {
+        ModelAndView modeandview=new ModelAndView();
+
+        List<Classinfo> pricls = userdao.queryAllCls();
+        List<Employee> coach=userdao.queryCoach();
+        modeandview.setViewName("private");
+        modeandview.addObject("clsList",pricls);
+        modeandview.addObject("coach",coach);
+
+        return modeandview;
+    }
+
+    @RequestMapping(value = "home/private/selectcoach", method = RequestMethod.POST)
+    public ModelAndView selectCoach(@RequestParam ("coach")String coach){
+        ModelAndView modeandview=new ModelAndView();
+
+        List<Classinfo> spricls = userdao.queryPriCls(coach);
+        List<Employee> scoach=userdao.queryCoach();
+        modeandview.setViewName("private");
+        modeandview.addObject("clsList",spricls);
+        modeandview.addObject("coach",scoach);
+        return modeandview;
+    }
+
+    @RequestMapping(value = "home/private/selecttime", method = RequestMethod.POST)
+    public ModelAndView selectTime(@RequestParam ("time")String time){
+        ModelAndView modeandview=new ModelAndView();
+
+        List<Classinfo> tpricls = userdao.queryPriTimeCls(time);
+        List<Employee> tcoach=userdao.queryCoach();
+        modeandview.setViewName("private");
+        modeandview.addObject("clsList",tpricls);
+        modeandview.addObject("coach",tcoach);
+        return modeandview;
+    }
+
+    @RequestMapping(value = "home/private/date", method = RequestMethod.POST)
+    public ModelAndView priDate(@RequestParam ("datecoach")String coach,
+                                @RequestParam ("datetime")String time){
+        Classinfo cls=new Classinfo();
+        cls.setClassname("私教");
+        cls.setTime(time);
+        cls.setCoach(coach);
+        userdao.addCls(cls);
+        return new ModelAndView("redirect:/home/private");
+
+    }
+
+    @RequestMapping("/home/private/quit")
+    public ModelAndView quitprivate(HttpServletRequest request,HttpServletResponse response)
+    {
+        return quit(request,response);
+
+    }
 
     public String cookieurl(Cookie[] id)
     {
@@ -312,14 +380,14 @@ public class usercontrol {
         List<User> us = userdao.queryAllUsers();
         for (User u : us)
         {
-            if(u.getIdUser()==num)
+            if(u.getEmp().getIdEmployee()==num)
             {
                 return false;
             }
         }
         for (Employee emp : emps)
         {
-            if(emp.getNum()==num)
+            if(emp.getIdEmployee()==num)
             {
                 return true;
             }

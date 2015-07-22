@@ -27,6 +27,8 @@
 <table id="usrtable" style="border: groove;margin: auto"  >
   <tr>
     <td id="listUserId" style="display: none">id</td>
+    <td style="background-color: #cccccc">工号</td>
+
     <td style="background-color: #cccccc">用户名</td>
     <td style="background-color: #cccccc">注册邮箱</td>
 
@@ -69,6 +71,7 @@
     for (User user : users) {
   %>
   <tr>
+    <td><%=user.getEmp().getIdEmployee()%></td>
 
     <td><%=user.getUsername()%></td>
     <td><%=user.getEmail()%></td>

@@ -43,7 +43,7 @@
 
     <td><%=emp.getName()%></td>
     <td><%=emp.getRole()%></td>
-    <td><%=emp.getNum()%></td>
+    <td><%=emp.getIdEmployee()%></td>
 
   <%--<td><a href="/web/home/regist_emp/${emp.getIdEmployee()}">删除</a>></td>--%>
     <td><a href="/web/home/regist_emp/<%=emp.getIdEmployee()%>">删除</a>></td>

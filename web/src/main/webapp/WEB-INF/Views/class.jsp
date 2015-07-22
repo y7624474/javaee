@@ -1,5 +1,8 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.tw.core.entity.Classinfo" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="com.tw.core.entity.Employee" %>
 <%--
   Created by IntelliJ IDEA.
   User: twer
@@ -51,12 +54,29 @@
     </tr>
     <tr>
       <td>时间:</td>
-      <td><input name="time" type="text"/></td>
-      </tr>
+      <td><input name="time" type="date"/></td>
+
+    </tr>
     <tr>
       <td>教练:</td>
-      <td><input name="coach" type="text"/></td>
+      <%--<td><input name="coach" type="text"/></td>--%>
+      <td>
+        <select name="coach">
+          <%
+            List<Employee> coach = (List<Employee>) request.getAttribute("coach");
+          %>
+          <%
+            for (Employee c : coach) {
+          %>
+          <option><%=c.getName()%></option>
+          <%
+            }
+          %>
+        </select>
+      </td>
 
+    </tr>
+    <tr>
       <td><input name="submit" type="submit" value="添加" /></td>
     </tr>
   </table>

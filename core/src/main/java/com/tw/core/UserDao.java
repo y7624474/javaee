@@ -52,7 +52,29 @@ public class UserDao {
     public static <T> T getById(Class<T> clazz, int id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
+
         T t = (T) session.get(clazz, id);
+        session.getTransaction().commit();
+        session.close();
+        return t;
+    }
+
+    public static <T> T getBynum(Class<T> clazz, int num) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        String hql = "FROM User as c where c.num='"+num+"'";
+        List<User> users = session.createQuery(hql).list();
+        int id=0;
+        for (User user : users)
+        {
+            if(user.getIdUser()==num)
+            {
+                id=user.getIdUser();
+            }
+
+
+        }
+            T t = (T) session.get(clazz, id);
         session.getTransaction().commit();
         session.close();
         return t;
@@ -152,5 +174,45 @@ public class UserDao {
 
         session.getTransaction().commit();
         session.close();
+    }
+
+    public List<Classinfo> queryAllPriCls() {
+
+        String hql = "FROM Classinfo";
+        Session session = HibernateUtil.getSession();
+        List<Classinfo> pricls = session.createQuery(hql).list();
+        session.close();
+        return pricls;
+
+    }
+
+    public List<Classinfo> queryPriCls(String coach) {
+
+        String hql = "FROM Classinfo as c where c.coach='"+coach+"'";
+        Session session = HibernateUtil.getSession();
+        List<Classinfo> pricls = session.createQuery(hql).list();
+        session.close();
+        return pricls;
+
+    }
+
+    public List<Classinfo> queryPriTimeCls(String time) {
+
+        String hql = "FROM Classinfo as c where c.time='"+time+"'";
+        Session session = HibernateUtil.getSession();
+        List<Classinfo> pricls = session.createQuery(hql).list();
+        session.close();
+        return pricls;
+
+    }
+
+    public List<Employee> queryCoach() {
+
+        String hql = "FROM Employee as c where c.role='coach'";
+        Session session = HibernateUtil.getSession();
+        List<Employee> coach = session.createQuery(hql).list();
+        session.close();
+        return coach;
+
     }
 }

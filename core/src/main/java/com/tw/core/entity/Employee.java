@@ -1,22 +1,29 @@
 package com.tw.core.entity;
 
+//import org.hibernate.annotations.Table;
+
+import javax.persistence.*;
+//import javax.persistence.Entity;
+//import javax.persistence.Id;
+
 /**
  * Created by twer on 7/16/15.
  */
-public class Employee {
 
+@Entity
+@Table(name="Employee")
+public class Employee {
+    @Column(name = "role")
     private String role;
+
+    @Column(name = "name")
     private String name;
-    private int num;
+
+
+    @Id
+    @Column(name = "idEmployee")
     private Integer idEmployee;
 
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
-    }
 
     public String getRole() {
         return role;

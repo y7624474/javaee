@@ -22,6 +22,12 @@
         <!-- idle的測試週期 -->
         <property name="c3p0.idle_test_period">3000</property>
 
-        <mapping resource="User.hbm.xml"/>
+        <property name="current_session_context_class">thread</property>
+
+        <mapping class="com.tw.core.entity.User"/>
+        <mapping class="com.tw.core.entity.Employee"/>
+        <mapping class="com.tw.core.entity.Classinfo"/>
+        <mapping class="com.tw.core.entity.Customer"/>
+
     </session-factory>
 </hibernate-configuration>

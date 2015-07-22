@@ -6,11 +6,13 @@
     <class name="com.tw.core.entity.User" table="User">
         <id name="idUser">
             <column name="idUser" />
-            <generator class="assigned" />
+            <generator class="native" />
         </id>
         <property name="email"></property>
         <property name="username"></property>
         <property name="password"></property>
+        <one-to-one name="emp" class="com.tw.core.entity.Employee" constrained="true" />
+
     </class>
     <class name="com.tw.core.entity.Employee" table="Employee">
         <id name="idEmployee">
@@ -20,6 +22,8 @@
         <property name="name"></property>
         <property name="role"></property>
         <property name="num"></property>
+        <one-to-one name="num" class="com.tw.core.entity.User" cascade="save-update"/>
+
     </class>
     <class name="com.tw.core.entity.Classinfo" table="Class">
         <id name="idClass">

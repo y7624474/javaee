@@ -1,11 +1,23 @@
 package com.tw.core.entity;
+import javax.persistence.*;
 
 /**
  * Created by twer on 7/19/15.
  */
+@Entity
+@Table(name="Customer")
 public class Customer {
+
+    @Column(name = "customer")
+
     private String customer;
+    @Column(name = "coach")
+
     private String coach;
+
+    @Id
+    @GeneratedValue
+    @Column(name = "idCustomer")
     private Integer idCustomer;
 
     public String getCustomer() {
