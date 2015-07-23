@@ -12,6 +12,8 @@
 <html>
 <head>
     <title>私教预约</title>
+  <link rel="stylesheet" href="./lib/css/home.css" type="text/css"/>
+
 </head>
 <body>
 
@@ -50,7 +52,7 @@
 </form>
 
 <form method="get" action='/web/home/private' >
-  <table id="privatetable" style="border: groove;margin: auto"  >
+  <table id="privatetable" style="border: groove; margin: auto;width: 700;font-size: 25;"  >
     <tr>
       <td id="ClassId" style="display: none">id</td>
       <td style="background-color: #cccccc">时间</td>
@@ -97,14 +99,13 @@
   </table>
 </form>
 
-
-<form method="post" action='/web/home/private/quit'>
-  <table style="float: right">
-    <tr>
-      <td><a href="/web/home" >返回</a></td>
-      <td><input name="submit" type="submit" value="退出登录" /></td>
-    </tr>
-  </table>
-</form>
+<%--<form method="post" action='/web/home/private/quit'>--%>
+  <%--<table style="float: right">--%>
+    <%--<tr>--%>
+      <%--<td><a href="/web/home" >返回</a></td>--%>
+      <%--<td><input name="submit" type="submit" value="退出登录" /></td>--%>
+    <%--</tr>--%>
+  <%--</table>--%>
+<%--</form>--%>
 </body>
 </html>

@@ -11,10 +11,12 @@
 <html>
 <head>
     <title></title>
+  <link rel="stylesheet" href="./lib/css/home.css" type="text/css"/>
+
 </head>
 <body>
 <form method="get" action='/web/home/customer' >
-  <table id="custable" style="border: groove;margin: auto"  >
+  <table id="custable" style="border: groove; margin: auto;width: 700;font-size: 25;"  >
     <tr>
       <td id="CusId" style="display: none">id</td>
       <td style="background-color: #cccccc">顾客</td>
@@ -55,13 +57,6 @@
   </table>
 </form>
 
-<form method="post" action='/web/home/customer/quit'>
-  <table style="float: right">
-    <tr>
-      <td><a href="/web/home" >返回</a></td>
-      <td><input name="submit" type="submit" value="退出登录" /></td>
-    </tr>
-  </table>
-</form>
+
 </body>
 </html>

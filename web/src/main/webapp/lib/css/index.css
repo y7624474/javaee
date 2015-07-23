@@ -1,0 +1,16 @@
+div{
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}
+
+h1{
+    color: #282E52;
+    font-family: cursive;
+    font-size: 65;
+}
+table
+{
+    /*font-family: cursive;*/
+    font-size: 20;
+}

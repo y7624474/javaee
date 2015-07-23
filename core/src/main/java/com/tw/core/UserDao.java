@@ -39,9 +39,9 @@ public class UserDao {
     public void commituser(User user, String method) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        if(method=="add")
+        if (method == "add")
             session.save(user);
-        if(method=="delete")
+        if (method == "delete")
             session.delete(user);
 
 
@@ -62,19 +62,17 @@ public class UserDao {
     public static <T> T getBynum(Class<T> clazz, int num) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        String hql = "FROM User as c where c.num='"+num+"'";
+        String hql = "FROM User as c where c.num='" + num + "'";
         List<User> users = session.createQuery(hql).list();
-        int id=0;
-        for (User user : users)
-        {
-            if(user.getIdUser()==num)
-            {
-                id=user.getIdUser();
+        int id = 0;
+        for (User user : users) {
+            if (user.getIdUser() == num) {
+                id = user.getIdUser();
             }
 
 
         }
-            T t = (T) session.get(clazz, id);
+        T t = (T) session.get(clazz, id);
         session.getTransaction().commit();
         session.close();
         return t;
@@ -86,7 +84,7 @@ public class UserDao {
 
 
     public void delEmp(Employee emp) {
-         commitEmp(emp, "delete");
+        commitEmp(emp, "delete");
     }
 
     public List<Employee> queryAllEmUsers() {
@@ -102,9 +100,9 @@ public class UserDao {
     public void commitEmp(Employee emp, String method) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        if(method=="add")
+        if (method == "add")
             session.save(emp);
-        if(method=="delete")
+        if (method == "delete")
             session.delete(emp);
 
 
@@ -134,9 +132,9 @@ public class UserDao {
     public void commitCls(Classinfo cls, String method) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        if(method=="add")
+        if (method == "add")
             session.save(cls);
-        if(method=="delete")
+        if (method == "delete")
             session.delete(cls);
 
 
@@ -166,9 +164,9 @@ public class UserDao {
     public void commitCus(Customer cus, String method) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        if(method=="add")
+        if (method == "add")
             session.save(cus);
-        if(method=="delete")
+        if (method == "delete")
             session.delete(cus);
 
 
@@ -187,8 +185,15 @@ public class UserDao {
     }
 
     public List<Classinfo> queryPriCls(String coach) {
+        //  HQL查询
+        //  HQL是hibernate自己的一套查询语言，于SQL语法不同，具有跨数据库的优点,缺点：是适用于hibernate框架
+        //  String hql = "FROM Classinfo as c where c.coach='"+coach+"'";
+        //  String hql = "FROM Classinfo as c where c.coach='"+coach+"' and c.time='2015-07-09'";
 
-        String hql = "FROM Classinfo as c where c.coach='"+coach+"'";
+        //对象化查询Criteria
+        //Criteria是一种比hql更面向对象的查询方式,易读 缺点：适用面较HQL有限
+        String hql = "FROM Classinfo as c where c.coach='" + coach + "'";
+
         Session session = HibernateUtil.getSession();
         List<Classinfo> pricls = session.createQuery(hql).list();
         session.close();
@@ -198,7 +203,7 @@ public class UserDao {
 
     public List<Classinfo> queryPriTimeCls(String time) {
 
-        String hql = "FROM Classinfo as c where c.time='"+time+"'";
+        String hql = "FROM Classinfo as c where c.time='" + time + "'";
         Session session = HibernateUtil.getSession();
         List<Classinfo> pricls = session.createQuery(hql).list();
         session.close();

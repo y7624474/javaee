@@ -12,20 +12,13 @@
 <html>
 <head>
     <title></title>
+  <link rel="stylesheet" href="./lib/css/iframe.css" type="text/css"/>
+
 </head>
 <body>
-<%--<form method="post" action='/web/home/regist_emp/del'>--%>
-  <%--<table style="margin: auto">--%>
-    <%--<tr>--%>
-      <%--<td>姓名:</td>--%>
-      <%--<td><input name="id" type="text"/></td>--%>
-      <%--<td><input name="submit" type="submit" value="删除" /></td>--%>
-    <%--</tr>--%>
-  <%--</table>--%>
-<%--</form>--%>
-
+<div>
 <form method="get" action='/web/home' method='get'>
-<table id="emptable" style="border: groove;margin: auto"  >
+<table id="emptable" style="border: groove; margin: auto;width: 700;font-size: 25;"  >
   <tr>
     <td id="listUserId" style="display: none">id</td>
     <td style="background-color: #cccccc">姓名</td>
@@ -58,7 +51,7 @@
 
 
 <form method="post" action='/web/home/regist_emp/add'>
-  <table style="margin: auto">
+  <table style="margin: auto;">
     <tr>
       <td>姓名:</td>
       <td><input name="name" type="text"/></td>
@@ -74,15 +67,8 @@
     </tr>
   </table>
 </form>
+</div>
 
-<form method="post" action='/web/home/regist_emp/quit'>
-  <table style="float: right">
-    <tr>
-      <td><a href="/web/home" >返回</a></td>
-      <td><input name="submit" type="submit" value="退出登录" /></td>
-    </tr>
-  </table>
-</form>
 
 </body>
 </html>

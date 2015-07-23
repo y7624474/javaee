@@ -18,4 +18,6 @@
               <property name="prefix" value="/WEB-INF/Views/"/>
               <property name="suffix" value=".jsp"/>
        </bean>
+       <mvc:resources mapping="/lib/**" location="/lib/"/>
+       <mvc:annotation-driven/>
 </beans>

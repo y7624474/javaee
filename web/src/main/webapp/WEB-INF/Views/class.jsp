@@ -14,11 +14,24 @@
 <html>
 <head>
     <title>课程表</title>
+  <link rel="stylesheet" href="./lib/css/iframe.css" type="text/css"/>
+
 </head>
 <body>
-
+<script type="text/javascript">
+  function update()
+  {
+    document.getElementById("update").style.display='block';
+  }
+  function reupdate()
+  {
+    document.getElementById("update").style.display='none';
+  }
+</script>
+<div >
 <form method="get" action='/web/home/class' >
-  <table id="classtable" style="border: groove;margin: auto"  >
+  <table id="classtable" style="border: groove; margin: auto;width: 700;font-size: 25;">
+    <%--<table> class="table table-bordered"></table>--%>
     <tr>
       <td id="ClassId" style="display: none">id</td>
       <td style="background-color: #cccccc">课程</td>
@@ -36,7 +49,8 @@
       <td><%=cls.getClassname()%></td>
       <td><%=cls.getTime()%></td>
       <td><%=cls.getCoach()%></td>
-      <td><a href="/web/home/class/<%=cls.getIdClass()%>">删除</a>></td>
+      <td><a href="/web/home/class/<%=cls.getIdClass()%>">删除</a></td>
+      <td><input type="button" value="修改" onclick="update()"></td>
 
       <%--<td><%=user.getPassword()%></td>--%>
     </tr>
@@ -44,6 +58,40 @@
       }
     %>
   </table>
+  <table id="update" style="margin: auto; display: none">
+    <tr>
+      <td>课程:</td>
+      <td><input name="updateclassname" type="text"/></td>
+    </tr>
+    <tr>
+      <td>时间:</td>
+      <td><input name="updatetime" type="date"/></td>
+
+    </tr>
+    <tr>
+      <td>教练:</td>
+      <%--<td><input name="coach" type="text"/></td>--%>
+      <td>
+        <select name="coach">
+          <%
+            List<Employee> uopdatecoach = (List<Employee>) request.getAttribute("coach");
+          %>
+          <%
+            for (Employee c : uopdatecoach) {
+          %>
+          <option><%=c.getName()%></option>
+          <%
+            }
+          %>
+        </select>
+      </td>
+
+    </tr>
+    <tr>
+      <td><input type="button" value="修改" onclick="reupdate()"></td>
+    </tr>
+  </table>
+
 </form>
 
 <form method="post" action='/web/home/class/add'>
@@ -75,20 +123,11 @@
         </select>
       </td>
 
-    </tr>
-    <tr>
+
       <td><input name="submit" type="submit" value="添加" /></td>
     </tr>
   </table>
 </form>
-
-<form method="post" action='/web/home/class/quit'>
-  <table style="float: right">
-    <tr>
-      <td><a href="/web/home" >返回</a></td>
-      <td><input name="submit" type="submit" value="退出登录" /></td>
-    </tr>
-  </table>
-</form>
+</div>
 </body>
 </html>

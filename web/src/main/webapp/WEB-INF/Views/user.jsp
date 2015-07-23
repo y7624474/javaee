@@ -11,20 +11,12 @@
 <html>
 <head>
     <title></title>
+  <link rel="stylesheet" href="./lib/css/home.css" type="text/css"/>
+
 </head>
 <body>
-<%--<form method="post" action='/web/home/user/del'>--%>
-  <%--<table style="margin: auto">--%>
-    <%--<tr>--%>
-      <%--<td>姓名:</td>--%>
-      <%--<td><input name="username" type="text"/></td>--%>
-      <%--<td><input name="submit" type="submit" value="删除" /></td>--%>
-    <%--</tr>--%>
-  <%--</table>--%>
-<%--</form>--%>
 
-<%--<form method="get" action='/web/usertable' method='get'>--%>
-<table id="usrtable" style="border: groove;margin: auto"  >
+<table id="usrtable" style="border: groove; margin: auto;width: 700;font-size: 25;" >
   <tr>
     <td id="listUserId" style="display: none">id</td>
     <td style="background-color: #cccccc">工号</td>
@@ -33,10 +25,6 @@
     <td style="background-color: #cccccc">注册邮箱</td>
 
   </tr>
-  <%--<tr>--%>
-  <%--<td><%=userCrs.getString("username")%></td>--%>
-  <%--<td>[<a href="UserHandleServlet?id=<%=userCrs.getInt("id")%>&handle=delete">删除</a>]</td>--%>
-  <%--</tr>--%>
 
   <%String Login = (String)request.getSession().getAttribute("Login");
 
@@ -76,8 +64,6 @@
     <td><%=user.getUsername()%></td>
     <td><%=user.getEmail()%></td>
     <td><a href="/web/home/user/<%=user.getIdUser()%>">删除</a>></td>
-
-  <%--<td><%=user.getPassword()%></td>--%>
   </tr>
   <%
     }
@@ -87,13 +73,5 @@
 </br>
 
 
-<form method="post" action='/web/home/user/quit'>
-  <table style="float: right">
-    <tr>
-      <td><a href="/web/home" >返回</a></td>
-      <td><input name="submit" type="submit" value="退出登录" /></td>
-    </tr>
-  </table>
-</form>
 </body>
 </html>
