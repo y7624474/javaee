@@ -12,13 +12,14 @@
 <html>
 <head>
     <title></title>
-  <link rel="stylesheet" href="./lib/css/iframe.css" type="text/css"/>
+
+  <link rel="stylesheet" href="<c:url value="/lib/css/iframe.css"/>" type="text/css"/>
 
 </head>
 <body>
 <div>
 <form method="get" action='/web/home' method='get'>
-<table id="emptable" style="border: groove; margin: auto;width: 700;font-size: 25;"  >
+<table id="emptable" >
   <tr>
     <td id="listUserId" style="display: none">id</td>
     <td style="background-color: #cccccc">姓名</td>
@@ -38,10 +39,8 @@
     <td><%=emp.getRole()%></td>
     <td><%=emp.getIdEmployee()%></td>
 
-  <%--<td><a href="/web/home/regist_emp/${emp.getIdEmployee()}">删除</a>></td>--%>
-    <td><a href="/web/home/regist_emp/<%=emp.getIdEmployee()%>">删除</a>></td>
+    <td><a href="/web/home/regist_emp/<%=emp.getIdEmployee()%>" onclick="javascript:return confirm('您确定要删除吗？');">删除</a>></td>
 
-  <%--<td><%=user.getPassword()%></td>--%>
   </tr>
   <%
     }
@@ -51,14 +50,20 @@
 
 
 <form method="post" action='/web/home/regist_emp/add'>
-  <table style="margin: auto;">
+  <table>
     <tr>
       <td>姓名:</td>
       <td><input name="name" type="text"/></td>
       </tr>
     <tr>
       <td>职位:</td>
-      <td><input name="role" type="text"/></td>
+      <td>
+        <select name="role">
+        <option>HR</option>
+        <option>OP</option>
+        <option>coach</option>
+      </select>
+      </td>
       </tr>
     <tr>
       <td>工号:</td>

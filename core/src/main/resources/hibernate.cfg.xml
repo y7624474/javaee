@@ -29,5 +29,6 @@
         <mapping class="com.tw.core.entity.Classinfo"/>
         <mapping class="com.tw.core.entity.Customer"/>
 
+
     </session-factory>
 </hibernate-configuration>

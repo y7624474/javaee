@@ -5,7 +5,12 @@ import com.tw.core.entity.Customer;
 import com.tw.core.entity.Employee;
 import com.tw.core.entity.User;
 import com.tw.core.util.HibernateUtil;
+import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.internal.*;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -119,6 +124,10 @@ public class UserDao {
         commitCls(cls, "delete");
     }
 
+    public void updateCls(Classinfo cls) {
+        commitCls(cls, "update");
+    }
+
     public List<Classinfo> queryAllCls() {
 
         String hql = "FROM Classinfo";
@@ -136,7 +145,8 @@ public class UserDao {
             session.save(cls);
         if (method == "delete")
             session.delete(cls);
-
+        if (method == "update")
+            session.update(cls);
 
         session.getTransaction().commit();
         session.close();
@@ -174,32 +184,69 @@ public class UserDao {
         session.close();
     }
 
-    public List<Classinfo> queryAllPriCls() {
 
-        String hql = "FROM Classinfo";
+    public List<Classinfo> queryPriCls(String strcoach) {
+
         Session session = HibernateUtil.getSession();
-        List<Classinfo> pricls = session.createQuery(hql).list();
-        session.close();
-        return pricls;
 
-    }
-
-    public List<Classinfo> queryPriCls(String coach) {
         //  HQL查询
         //  HQL是hibernate自己的一套查询语言，于SQL语法不同，具有跨数据库的优点,缺点：是适用于hibernate框架
-        //  String hql = "FROM Classinfo as c where c.coach='"+coach+"'";
+
+        String hql = "FROM Classinfo as c where c.coach='"+strcoach+"'";
         //  String hql = "FROM Classinfo as c where c.coach='"+coach+"' and c.time='2015-07-09'";
-
-        //对象化查询Criteria
-        //Criteria是一种比hql更面向对象的查询方式,易读 缺点：适用面较HQL有限
-        String hql = "FROM Classinfo as c where c.coach='" + coach + "'";
-
-        Session session = HibernateUtil.getSession();
         List<Classinfo> pricls = session.createQuery(hql).list();
         session.close();
         return pricls;
 
+
+        //对象化查询Criteria
+        //Criteria是一种比hql更面向对象的查询方式,革新了以前的数据库操作方式，易读 缺点：适用面较HQL有限
+
+//        Criteria c=session.createCriteria(Classinfo.class);
+//        c.add(Restrictions.eq("coach",strcoach));
+//        List<Classinfo> pricls = c.list();
+//        session.close();
+//        return pricls;
+
     }
+
+//    public static List queryPriCls(String strcoach) {
+//
+//        Session session = HibernateUtil.getSession();
+//
+//        //动态分离查询DetachedCriteria
+//        //DetachedCriteria类使你在一个session范围之外创建一个查询，并且可以使用任意的 Session来执行它。面向对象操作，分离业务与底层，不需要字段属性摄入到Dao实现层。  缺点：适用面较HQL有限
+//
+//        DetachedCriteria dc = DetachedCriteria.forClass(Classinfo.class);
+//        dc.add(Restrictions.eq("coach",strcoach));
+//        List classinfo=dc(dc);
+//        return classinfo;
+//
+//        //sql查询
+//        // 如果不熟悉HQL，不打算转数据库平台，万能方法   缺点：破坏跨平台，不易维护，不面向对象。
+//
+////        SQLQuery q =  session.createSQLQuery("select * from class where coach='"+strcoach+"'").addEntity(Classinfo.class);
+////        List<Classinfo> rs = q.list();
+////        session.close();
+////        return rs;
+//
+//
+//        //命名查询
+//        //万能方法，有点像ibatis轻量级框架的操作，方便维护。  缺点：不面向对象。基于hql和sql，有一定缺陷
+////        SQLQuery q = session.getNamedQuery("getListByCoach");
+////        return q.list();
+//    }
+
+    static List dc(DetachedCriteria dc) {
+
+        Session session = HibernateUtil.getSession();
+        Criteria c = dc.getExecutableCriteria(session);
+        List rs = c.list();
+        session.close();
+        return rs;
+    }
+
+
 
     public List<Classinfo> queryPriTimeCls(String time) {
 

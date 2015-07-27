@@ -1,7 +1,25 @@
-div
+table
 {
     border: groove;
     margin: auto;
     width: 700;
     font-size: 25;
+}
+
+input
+{
+    color: #5B28CC;
+    background-color: bisque;
+}
+
+button
+{
+    width: 38;
+    height: 22;
+    color: #5B28CC;
+    background-color: bisque;
+}
+select
+{
+    width: 132;
 }

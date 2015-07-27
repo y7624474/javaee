@@ -26,7 +26,7 @@ import javax.servlet.http.*;
  * Created by twer on 7/13/15.
  */
 @Controller
-public class usercontrol {
+public class UserControl {
 
 @Autowired
     private UserDao userdao;
@@ -66,135 +66,6 @@ public class usercontrol {
 
     }
 
-//雇员登记
-    @RequestMapping(value = "/home/regist_emp", method = RequestMethod.GET)
-    public ModelAndView getAllEmUser() {
-        List<Employee> emps = userdao.queryAllEmUsers();
-        return new ModelAndView("regist_employee","empList",emps);
-    }
-
-    @RequestMapping(value = "/home/regist_emp/add", method = RequestMethod.POST)
-    public ModelAndView addEmUser(@RequestParam ("name") String name,
-                                  @RequestParam ("role") String role,
-                                  @RequestParam ("num") String num
-                                  ){
-        Employee emp=new Employee();
-
-        emp.setName(name);
-        emp.setRole(role);
-        emp.setIdEmployee(Integer.parseInt(num));
-
-        userdao.addEmp(emp);
-        getAllEmUser();
-        return new ModelAndView("redirect:/home/regist_emp");
-    }
-
-    @RequestMapping(value = "/home/regist_emp/{id}")
-    public ModelAndView delEmUser(@PathVariable Integer id) {
-
-//
-        Employee emp=new Employee();
-//        User user=userdao.getBynum(User.class,id);
-//        userdao.deleteUser(user);
-//        Employee emp=new Employee();
-        emp.setIdEmployee(id);
-        userdao.delEmp(emp);
-        getAllEmUser();
-
-        return new ModelAndView("redirect:/home/regist_emp");
-    }
-
-
-    @RequestMapping("/home/regist_emp/quit")
-    public ModelAndView quitregistlogin(HttpServletRequest request,HttpServletResponse response)
-    {
-        return quit(request,response);
-
-    }
-
-//课程信息
-    @RequestMapping(value = "/home/class", method = RequestMethod.GET)
-    public ModelAndView getAllCls() {
-        ModelAndView modeandview=new ModelAndView();
-
-        List<Classinfo> cls = userdao.queryAllCls();
-        List<Employee> coach=userdao.queryCoach();
-        modeandview.setViewName("class");
-        modeandview.addObject("clsList", cls);
-        modeandview.addObject("coach",coach);
-
-
-        return modeandview;
-}
-
-
-    @RequestMapping(value = "/home/class/add", method = RequestMethod.POST)
-    public ModelAndView addCls(@RequestParam ("classname") String clsname,
-                                  @RequestParam ("time") String time,
-                                  @RequestParam ("coach") String coach){
-        Classinfo cls=new Classinfo();
-        cls.setClassname(clsname);
-        cls.setTime(time);
-        cls.setCoach(coach);
-
-        userdao.addCls(cls);
-        getAllCls();
-        return new ModelAndView("redirect:/home/class");
-    }
-
-    @RequestMapping(value = "/home/class/{id}")
-    public ModelAndView delCls(@PathVariable Integer id) {
-        Classinfo cls=new Classinfo();
-        cls.setIdClass(id);
-        userdao.delCls(cls);
-        getAllCls();
-
-        return new ModelAndView("redirect:/home/class");
-    }
-
-    @RequestMapping("/home/class/quit")
-    public ModelAndView quitcls(HttpServletRequest request,HttpServletResponse response)
-    {
-       return quit(request,response);
-
-    }
-
-//顾客信息
-    @RequestMapping(value = "/home/customer", method = RequestMethod.GET)
-    public ModelAndView getAllCus() {
-    List<Customer> cus = userdao.queryAllCus();
-    return new ModelAndView("customer","cusList",cus);
-}
-
-
-    @RequestMapping(value = "/home/customer/add", method = RequestMethod.POST)
-    public ModelAndView addCus(@RequestParam ("customer") String cusname,
-                               @RequestParam ("coach") String coach){
-        Customer cus=new Customer();
-        cus.setCustomer(cusname);
-        cus.setCoach(coach);
-        getAllCus();
-        userdao.addCus(cus);
-        return new ModelAndView("redirect:/home/customer");
-    }
-
-    @RequestMapping(value = "/home/customer/{id}")
-    public ModelAndView delCus(@PathVariable Integer id) {
-        Customer cus=new Customer();
-        cus.setIdCustomer(id);
-        userdao.delCus(cus);
-        getAllCus();
-
-        return new ModelAndView("redirect:/home/customer");
-    }
-
-
-    @RequestMapping("/home/customer/quit")
-    public ModelAndView quitcus(HttpServletRequest request,HttpServletResponse response)
-    {
-        return quit(request,response);
-
-    }
 
 //登录
 
@@ -274,68 +145,13 @@ public class usercontrol {
         }
         else
         {
-            out.println("注册失败！");
+
+            out.print("<script>alert('系统仅限本公司雇员使用，请输入正确的工号！');</script>");
             return new ModelAndView("registuser");
         }
     }
 
-//私教预约
 
-    @RequestMapping(value = "/home/private", method = RequestMethod.GET)
-    public ModelAndView getPrivate() {
-        ModelAndView modeandview=new ModelAndView();
-
-        List<Classinfo> pricls = userdao.queryAllCls();
-        List<Employee> coach=userdao.queryCoach();
-        modeandview.setViewName("private");
-        modeandview.addObject("clsList",pricls);
-        modeandview.addObject("coach",coach);
-
-        return modeandview;
-    }
-
-    @RequestMapping(value = "home/private/selectcoach", method = RequestMethod.POST)
-    public ModelAndView selectCoach(@RequestParam ("coach")String coach){
-        ModelAndView modeandview=new ModelAndView();
-
-        List<Classinfo> spricls = userdao.queryPriCls(coach);
-        List<Employee> scoach=userdao.queryCoach();
-        modeandview.setViewName("private");
-        modeandview.addObject("clsList",spricls);
-        modeandview.addObject("coach",scoach);
-        return modeandview;
-    }
-
-    @RequestMapping(value = "home/private/selecttime", method = RequestMethod.POST)
-    public ModelAndView selectTime(@RequestParam ("time")String time){
-        ModelAndView modeandview=new ModelAndView();
-
-        List<Classinfo> tpricls = userdao.queryPriTimeCls(time);
-        List<Employee> tcoach=userdao.queryCoach();
-        modeandview.setViewName("private");
-        modeandview.addObject("clsList",tpricls);
-        modeandview.addObject("coach",tcoach);
-        return modeandview;
-    }
-
-    @RequestMapping(value = "home/private/date", method = RequestMethod.POST)
-    public ModelAndView priDate(@RequestParam ("datecoach")String coach,
-                                @RequestParam ("datetime")String time){
-        Classinfo cls=new Classinfo();
-        cls.setClassname("私教");
-        cls.setTime(time);
-        cls.setCoach(coach);
-        userdao.addCls(cls);
-        return new ModelAndView("redirect:/home/private");
-
-    }
-
-    @RequestMapping("/home/private/quit")
-    public ModelAndView quitprivate(HttpServletRequest request,HttpServletResponse response)
-    {
-        return quit(request,response);
-
-    }
 
     public String cookieurl(Cookie[] id)
     {

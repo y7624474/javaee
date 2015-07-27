@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: twer
@@ -9,6 +10,8 @@
 <html>
 <head>
     <title></title>
+    <link rel="stylesheet" href="<c:url value="/lib/css/iframe.css"/>" type="text/css"/>
+
 </head>
 <body>
 <div style="height: 100%; background-image: url('./lib/image/back.jpg')">

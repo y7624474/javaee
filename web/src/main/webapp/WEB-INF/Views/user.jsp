@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.tw.core.entity.User" %>
 <%@ page import="java.util.List" %>
 <%--
@@ -11,12 +12,12 @@
 <html>
 <head>
     <title></title>
-  <link rel="stylesheet" href="./lib/css/home.css" type="text/css"/>
+  <link rel="stylesheet" href="<c:url value="/lib/css/iframe.css"/>" type="text/css"/>
 
 </head>
 <body>
 
-<table id="usrtable" style="border: groove; margin: auto;width: 700;font-size: 25;" >
+<table id="usrtable">
   <tr>
     <td id="listUserId" style="display: none">id</td>
     <td style="background-color: #cccccc">工号</td>
@@ -63,7 +64,7 @@
 
     <td><%=user.getUsername()%></td>
     <td><%=user.getEmail()%></td>
-    <td><a href="/web/home/user/<%=user.getIdUser()%>">删除</a>></td>
+    <td><a href="/web/home/user/<%=user.getIdUser()%>" onclick="javascript:return confirm('您确定要删除吗？');">删除</a>></td>
   </tr>
   <%
     }

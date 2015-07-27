@@ -10,11 +10,11 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="./lib/css/home.css" type="text/css"/>
+    <link rel="stylesheet" href="lib/css/home.css" type="text/css"/>
 </head>
 <script type="text/javascript" src="lib/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
-
+    console.log("home page...");
     //  $(document).ready(function(){
     //    $.get("/web/dbrs",function(data,status){
     //      var users=data;
@@ -29,11 +29,18 @@
     //
     //    });
     //  });
-
-
+    $(function() {
+        console.log("Home jquery");
+        var result = $('#myiframe').prop('contentWindow').document;
+        $(result).ready(function(){
+//    $("#updatebtn").click(function(){
+            $("#update").hide();
+//    });
+        });
+    });
 </script>
 <body>
-<div style="background-image: url('./lib/image/back.jpg')">
+<div style="background-image: url('lib/image/back.jpg')">
 <div>
     <table style="margin: auto">
         <tr>
@@ -53,13 +60,13 @@
     <form method="post" action='/web/home/user/quit'>
         <table style="float: right;margin-right: 40">
             <tr>
-                <td><input name="submit" type="submit" value="退出登录"/></td>
+                <td><input name="submit" type="submit" value="退出登录" style="color: #5B28CC;background-color: bisque;width: 100;height: 30;font-size: 13;"></td>
             </tr>
         </table>
     </form>
 </div>
 <div>
-    <iframe name="link" src="home/regist_emp" ></iframe>
+    <iframe id="myiframe" name="link" src="home/regist_emp" ></iframe>
 </div>
 </div>
 

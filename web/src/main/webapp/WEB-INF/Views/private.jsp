@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.tw.core.entity.Classinfo" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.tw.core.entity.Employee" %>
@@ -12,14 +13,14 @@
 <html>
 <head>
     <title>私教预约</title>
-  <link rel="stylesheet" href="./lib/css/home.css" type="text/css"/>
+  <link rel="stylesheet" href="<c:url value="/lib/css/iframe.css"/>" type="text/css"/>
 
 </head>
 <body>
 
 
 <form method="post" action='/web/home/private/selecttime'>
-  <table style="margin: auto">
+  <table>
     <tr>
       <td>时间:</td>
       <td><input name="time" type="date"/></td>
@@ -28,7 +29,7 @@
   </table>
 </form>
 <form method="post" action='/web/home/private/selectcoach'>
-  <table style="margin: auto">
+  <table>
     <tr>
       <td>教练:</td>
       <td>
@@ -52,7 +53,7 @@
 </form>
 
 <form method="get" action='/web/home/private' >
-  <table id="privatetable" style="border: groove; margin: auto;width: 700;font-size: 25;"  >
+  <table id="privatetable"  >
     <tr>
       <td id="ClassId" style="display: none">id</td>
       <td style="background-color: #cccccc">时间</td>
@@ -78,7 +79,7 @@
 
 
 <form method="post" action='/web/home/private/date'>
-  <table style="margin: auto">
+  <table>
     <tr>
       <td>时间:</td>
       <td><input name="datetime" type="date"/></td>
@@ -99,13 +100,5 @@
   </table>
 </form>
 
-<%--<form method="post" action='/web/home/private/quit'>--%>
-  <%--<table style="float: right">--%>
-    <%--<tr>--%>
-      <%--<td><a href="/web/home" >返回</a></td>--%>
-      <%--<td><input name="submit" type="submit" value="退出登录" /></td>--%>
-    <%--</tr>--%>
-  <%--</table>--%>
-<%--</form>--%>
 </body>
 </html>

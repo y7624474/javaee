@@ -34,6 +34,13 @@
         <property name="time"></property>
         <property name="coach"></property>
     </class>
+    <query name="getListByCoach">
+        <![CDATA[from Classinfo where coach=:strcoach]]>
+        <!-- 命名查询中使用sql，不推荐使用，影响跨数据库
+    <sql-query name="getUserById">
+     <![CDATA[select * from User where ]]>
+    </sql-query> -->
+    </query>
     <class name="com.tw.core.entity.Customer" table="Customer">
         <id name="idCustomer">
             <column name="idCustomer" />
