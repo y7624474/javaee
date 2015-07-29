@@ -1,5 +1,6 @@
 package com.tw.core.control;
 
+import com.google.gson.Gson;
 import com.tw.core.UserDao;
 import com.tw.core.entity.Classinfo;
 import com.tw.core.entity.Customer;
@@ -8,18 +9,12 @@ import com.tw.core.entity.User;
 import org.hibernate.Session;
 import org.hibernate.annotations.Table;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.security.*;
-import java.util.Date;
 import java.util.List;
 import javax.servlet.http.*;
 /**
@@ -32,7 +27,7 @@ public class clsControl {
     private UserDao userdao;
 
     //课程信息
-    @RequestMapping(value = "/home/class", method = RequestMethod.GET)
+    @RequestMapping(value = "/class", method = RequestMethod.GET)
     public ModelAndView getAllCls() {
         ModelAndView modeandview=new ModelAndView();
         List<Classinfo> cls = userdao.queryAllCls();
@@ -59,7 +54,7 @@ public class clsControl {
     }
 
     @RequestMapping(value = "/home/class/update", method = RequestMethod.POST)
-    public ModelAndView updateCls(@RequestParam ("updateid") String id,
+    public void updateCls(HttpServletResponse response,@RequestParam ("updateid") String id,
                                   @RequestParam ("updateclassname") String clsname,
                                   @RequestParam ("updatetime") String time,
                                   @RequestParam ("updatecoach") String coach){
@@ -71,16 +66,25 @@ public class clsControl {
 
         userdao.updateCls(cls);
         getAllCls();
-        return new ModelAndView("redirect:/home/class");
+        Gson gson = new Gson();
+        String strcls = gson.toJson(cls);
+
+        try {
+            response.getWriter().write(strcls.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        return new ModelAndView("redirect:/home/class");
     }
 
-    @RequestMapping(value = "/home/class/{id}")
-    public ModelAndView delCls(@PathVariable Integer id) {
+    @RequestMapping(value = "/home/class/{id}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.OK)
+    public void delCls(@PathVariable Integer id) {
         Classinfo cls=new Classinfo();
         cls.setIdClass(id);
         userdao.delCls(cls);
         getAllCls();
 
-        return new ModelAndView("redirect:/home/class");
+//        return new ModelAndView("redirect:/home/class");
     }
 }

@@ -16,21 +16,6 @@ import com.tw.core.userH;
  */
 @WebServlet("/web/AddUserServlet")
 public class AddUserServlet extends HttpServlet {
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        CachedRowSet cachedRowSet = null;
-//        PrintWriter out = response.getWriter();
-//        String name = request.getParameter("username");
-//        String sql="insert into user values('"+name+"')";
-//        try {
-//
-//            new userH().InsertSql(sql);
-//            response.sendRedirect("index.jsp");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//}
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CachedRowSet cachedRowSet = null;
@@ -49,7 +34,6 @@ public class AddUserServlet extends HttpServlet {
             userdao.addUser(user);
 
 //            new userH().InsertSql(sql);
-            response.sendRedirect("index.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }

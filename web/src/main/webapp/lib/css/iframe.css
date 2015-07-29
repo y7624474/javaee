@@ -3,23 +3,36 @@ table
     border: groove;
     margin: auto;
     width: 700;
-    font-size: 25;
+    font-size: 20;
 }
 
 input
 {
+    font-size: 20;
     color: #5B28CC;
-    background-color: bisque;
+    background-color: #C3DAEE;
 }
 
 button
 {
-    width: 38;
-    height: 22;
-    color: #5B28CC;
-    background-color: bisque;
+    font-size: 15;
+
+    width: 49;
+    height: 25;
+    color: #303438;
+    background-color: #C3DAEE;
 }
 select
 {
     width: 132;
+    font-size: 15;
+    background-color: #C3DAEE;
+}
+
+h2
+{
+    text-align: center;
+    color: #4E1F1F;
+    font-family: cursive;
+    font-size: 30;
 }

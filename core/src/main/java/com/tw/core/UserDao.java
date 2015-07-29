@@ -201,7 +201,7 @@ public class UserDao {
 
         //对象化查询Criteria
         //Criteria是一种比hql更面向对象的查询方式,革新了以前的数据库操作方式，易读 缺点：适用面较HQL有限
-
+//
 //        Criteria c=session.createCriteria(Classinfo.class);
 //        c.add(Restrictions.eq("coach",strcoach));
 //        List<Classinfo> pricls = c.list();
@@ -217,24 +217,24 @@ public class UserDao {
 //        //动态分离查询DetachedCriteria
 //        //DetachedCriteria类使你在一个session范围之外创建一个查询，并且可以使用任意的 Session来执行它。面向对象操作，分离业务与底层，不需要字段属性摄入到Dao实现层。  缺点：适用面较HQL有限
 //
-//        DetachedCriteria dc = DetachedCriteria.forClass(Classinfo.class);
-//        dc.add(Restrictions.eq("coach",strcoach));
-//        List classinfo=dc(dc);
-//        return classinfo;
+////        DetachedCriteria dc = DetachedCriteria.forClass(Classinfo.class);
+////        dc.add(Restrictions.eq("coach",strcoach));
+////        List classinfo=dc(dc);
+////        return classinfo;
 //
 //        //sql查询
-//        // 如果不熟悉HQL，不打算转数据库平台，万能方法   缺点：破坏跨平台，不易维护，不面向对象。
+//        // 如果不熟悉HQL，不可以转数据库平台，万能方法   缺点：破坏跨平台，不易维护，不面向对象。
 //
-////        SQLQuery q =  session.createSQLQuery("select * from class where coach='"+strcoach+"'").addEntity(Classinfo.class);
-////        List<Classinfo> rs = q.list();
-////        session.close();
-////        return rs;
+//        SQLQuery q =  session.createSQLQuery("select * from class where coach='"+strcoach+"'").addEntity(Classinfo.class);
+//        List<Classinfo> rs = q.list();
+//        session.close();
+//        return rs;
 //
 //
 //        //命名查询
 //        //万能方法，有点像ibatis轻量级框架的操作，方便维护。  缺点：不面向对象。基于hql和sql，有一定缺陷
-////        SQLQuery q = session.getNamedQuery("getListByCoach");
-////        return q.list();
+//        SQLQuery q = session.getNamedQuery("getListByCoach");
+//        return q.list();
 //    }
 
     static List dc(DetachedCriteria dc) {

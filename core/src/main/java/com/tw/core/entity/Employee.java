@@ -2,6 +2,8 @@ package com.tw.core.entity;
 
 //import org.hibernate.annotations.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 //import javax.persistence.Entity;
 //import javax.persistence.Id;
@@ -21,7 +23,8 @@ public class Employee {
 
 
     @Id
-    @Column(name = "idEmployee")
+//    @GenericGenerator(name = "idGenerator", strategy = "assigned")
+    @Column(name = "idEmployee" )
     private Integer idEmployee;
 
 

@@ -1,0 +1,60 @@
+<html>
+<head>
+    <title></title>
+
+  <link rel="stylesheet" href="../../lib/css/iframe.css" type="text/css"/>
+
+</head>
+<body>
+<div>
+<table class="table table-bordered" >
+  <tr>
+    <td id="listUserId" style="display: none">id</td>
+    <td style="background-color: #cccccc">姓名</td>
+    <td style="background-color: #cccccc">职位</td>
+    <td style="background-color: #cccccc">工号</td>
+    <td style="background-color: #cccccc"></td>
+    <td style="background-color: #cccccc"></td>
+  </tr>
+  <tr ng-repeat="emp in emps">
+    <td>{{emp.name}}</td>
+    <td>{{emp.role}}</td>
+    <td>{{emp.idEmployee}}</td>
+
+    <td>
+      <a href="#/regist_emp/update/{{emp.idEmployee}}">修改</a>
+    </td>
+    <td>
+        <a ng-click="deleteEmp(emp.idEmployee)">删除</a>
+    </td>
+  </tr>
+</table>
+
+  <h2 >增加新员工</h2>
+  <table style="border: none">
+
+    <tr>
+      <td>姓名:</td>
+      <td><input name="name" type="text" ng-model="emp.name"/></td>
+      </tr>
+    <tr>
+      <td>职位:</td>
+      <td>
+        <select name="role" ng-model="emp.role">
+        <option>HR</option>
+        <option>OP</option>
+        <option>coach</option>
+      </select>
+      </td>
+      </tr>
+    <tr>
+      <td>工号:</td>
+      <td><input name="num" type="text" ng-model="emp.idEmployee"/>
+      <button type="button"  ng-click="addEmp(emp)">添加</button></td>
+    </tr>
+  </table>
+</div>
+
+
+</body>
+</html>
