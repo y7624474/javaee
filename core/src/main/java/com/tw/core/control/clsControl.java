@@ -20,37 +20,35 @@ import javax.servlet.http.*;
 /**
  * Created by twer on 7/13/15.
  */
-@Controller
+@RestController
+@RequestMapping(value = "/class")
 public class clsControl {
 
     @Autowired
     private UserDao userdao;
 
     //课程信息
-    @RequestMapping(value = "/class", method = RequestMethod.GET)
-    public ModelAndView getAllCls() {
-        ModelAndView modeandview=new ModelAndView();
-        List<Classinfo> cls = userdao.queryAllCls();
-        List<Employee> coach=userdao.queryCoach();
-        modeandview.setViewName("class");
-        modeandview.addObject("clsList", cls);
-        modeandview.addObject("coach", coach);
-        return modeandview;
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody String getAllCls() {
+        Gson gson=new Gson();
+        List<Classinfo> cls = userdaoç.queryAllCls();
+//        List<Employee> coach=userdao.queryCoach();
+        return gson.toJson(cls);
+    }
+
+    @RequestMapping(value = "/getcoach" ,method = RequestMethod.GET)
+    public @ResponseBody String getCoachs() {
+        Gson gson=new Gson();
+        List<Employee> coachs=userdao.queryCoach();
+        return gson.toJson(coachs);
     }
 
 
-    @RequestMapping(value = "/home/class/add", method = RequestMethod.POST)
-    public ModelAndView addCls(@RequestParam ("classname") String clsname,
-                               @RequestParam ("time") String time,
-                               @RequestParam ("coach") String coach){
-        Classinfo cls=new Classinfo();
-        cls.setClassname(clsname);
-        cls.setTime(time);
-        cls.setCoach(coach);
-
+    @RequestMapping(method = RequestMethod.POST)
+    public void addCls(@RequestBody Classinfo cls){
+        String str=cls.getTime().substring(0,10);
+        cls.setTime(str);
         userdao.addCls(cls);
-        getAllCls();
-        return new ModelAndView("redirect:/home/class");
     }
 
     @RequestMapping(value = "/home/class/update", method = RequestMethod.POST)
@@ -77,14 +75,11 @@ public class clsControl {
 //        return new ModelAndView("redirect:/home/class");
     }
 
-    @RequestMapping(value = "/home/class/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void delCls(@PathVariable Integer id) {
         Classinfo cls=new Classinfo();
         cls.setIdClass(id);
         userdao.delCls(cls);
-        getAllCls();
-
-//        return new ModelAndView("redirect:/home/class");
     }
 }

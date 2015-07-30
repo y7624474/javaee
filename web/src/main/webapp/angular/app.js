@@ -18,6 +18,10 @@ angular.module('users_management', ['ngRoute'])
             .when('/class', {
                 templateUrl: 'class.html',
                 controller: 'clsController'
+            })
+            .when('/private', {
+                templateUrl: 'private.html',
+                controller: 'priController'
             });
 
 

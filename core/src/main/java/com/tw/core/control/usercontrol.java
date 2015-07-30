@@ -1,5 +1,6 @@
 package com.tw.core.control;
 
+import com.google.gson.Gson;
 import com.tw.core.UserDao;
 import com.tw.core.entity.Classinfo;
 import com.tw.core.entity.Customer;
@@ -9,10 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.annotations.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -25,36 +23,31 @@ import javax.servlet.http.*;
 /**
  * Created by twer on 7/13/15.
  */
-@Controller
+@RestController
+@RequestMapping(value = "/user")
 public class UserControl {
 
 @Autowired
     private UserDao userdao;
 
-//主界面
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public ModelAndView getHome() {
-        List<User> users = userdao.queryAllUsers();
-        return new ModelAndView("home","userList",users);
-    }
 
 //用户管理
-    @RequestMapping(value = "/home/user", method = RequestMethod.GET)
-    public ModelAndView getUser() {
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody String getAllUser() {
+        Gson gson=new Gson();
         List<User> users = userdao.queryAllUsers();
 
-        return new ModelAndView("user","userList",users);
+        return gson.toJson(users);
     }
 
 
-    @RequestMapping(value="/home/user/{id}")
+    @RequestMapping(value="/{id}")
     public ModelAndView deluser(@PathVariable Integer id)
     {
         User user = new User();
         user.setIdUser(id);
 
         userdao.deleteUser(user);
-        getUser();
         return new ModelAndView("redirect:/home/user");
 
     }
@@ -69,43 +62,43 @@ public class UserControl {
 
 //登录
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView start()
-    {
-        return new ModelAndView("index");
-
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public ModelAndView login(HttpServletRequest request,
-                              HttpServletResponse response,
-                              @RequestParam ("loginname") String username,
-                              @RequestParam ("password") String password)
-            throws UnsupportedEncodingException, NoSuchAlgorithmException {
-
-        if(verify(username,password))//做一些数据库验证
-        {
-
-            request.getSession().setAttribute("Login", "OK");
-            Cookie[] cookieid=request.getCookies();
-            System.out.print("1");
-            if(!cookieurl(cookieid).equals(""))
-            {
-                System.out.print("2");
-                String url=cookieurl(cookieid);
-                return new ModelAndView("redirect:"+url);
-            }
-
-            System.out.print("3");
-
-            return new ModelAndView("redirect:/home");
-
-        }
-        else {
-            return new ModelAndView("index");
-        }
-
-    }
+//    @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public ModelAndView start()
+//    {
+//        return new ModelAndView("index");
+//
+//    }
+//
+//    @RequestMapping(value = "/", method = RequestMethod.POST)
+//    public ModelAndView login(HttpServletRequest request,
+//                              HttpServletResponse response,
+//                              @RequestParam ("loginname") String username,
+//                              @RequestParam ("password") String password)
+//            throws UnsupportedEncodingException, NoSuchAlgorithmException {
+//
+//        if(verify(username,password))//做一些数据库验证
+//        {
+//
+//            request.getSession().setAttribute("Login", "OK");
+//            Cookie[] cookieid=request.getCookies();
+//            System.out.print("1");
+//            if(!cookieurl(cookieid).equals(""))
+//            {
+//                System.out.print("2");
+//                String url=cookieurl(cookieid);
+//                return new ModelAndView("redirect:"+url);
+//            }
+//
+//            System.out.print("3");
+//
+//            return new ModelAndView("redirect:/home");
+//
+//        }
+//        else {
+//            return new ModelAndView("index");
+//        }
+//
+//    }
 
 
 //注册用户

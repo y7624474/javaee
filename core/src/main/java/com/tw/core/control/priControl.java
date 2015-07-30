@@ -1,13 +1,13 @@
 package com.tw.core.control;
 
+import com.google.gson.Gson;
 import com.tw.core.UserDao;
 import com.tw.core.entity.Classinfo;
+import com.tw.core.entity.Customer;
 import com.tw.core.entity.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * Created by twer on 7/26/15.
  */
-@Controller
-
+@RestController
+@RequestMapping(value = "/private")
 public class priControl {
 
 
@@ -25,20 +25,15 @@ public class priControl {
 
     //私教预约
 
-    @RequestMapping(value = "/home/private", method = RequestMethod.GET)
-    public ModelAndView getPrivate() {
-        ModelAndView modeandview=new ModelAndView();
-
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody String getAllPri() {
+        Gson gson=new Gson();
         List<Classinfo> pricls = userdao.queryAllCls();
-        List<Employee> coach=userdao.queryCoach();
-        modeandview.setViewName("private");
-        modeandview.addObject("clsList",pricls);
-        modeandview.addObject("coach",coach);
+        return gson.toJson(pricls);
 
-        return modeandview;
     }
 
-    @RequestMapping(value = "home/private/selectcoach", method = RequestMethod.POST)
+    @RequestMapping(value = "/selectcoach", method = RequestMethod.POST)
     public ModelAndView selectCoach(@RequestParam("coach")String coach){
         ModelAndView modeandview=new ModelAndView();
 
@@ -50,7 +45,7 @@ public class priControl {
         return modeandview;
     }
 
-    @RequestMapping(value = "home/private/selecttime", method = RequestMethod.POST)
+    @RequestMapping(value = "/selecttime", method = RequestMethod.POST)
     public ModelAndView selectTime(@RequestParam ("time")String time){
         ModelAndView modeandview=new ModelAndView();
 
@@ -62,7 +57,7 @@ public class priControl {
         return modeandview;
     }
 
-    @RequestMapping(value = "home/private/date", method = RequestMethod.POST)
+    @RequestMapping(value = "/date", method = RequestMethod.POST)
     public ModelAndView priDate(@RequestParam ("datecoach")String coach,
                                 @RequestParam ("datetime")String time){
         Classinfo cls=new Classinfo();

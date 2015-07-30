@@ -27,8 +27,6 @@ public class empControl {
     @RequestMapping(method = RequestMethod.POST)
     public void addEmUser(@RequestBody Employee emp
     ){
-//        emp.setName(emp.name);
-//        emp.setRole(emp.role);
           userdao.addEmp(emp);
     }
 

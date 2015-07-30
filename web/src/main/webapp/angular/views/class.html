@@ -2,7 +2,6 @@
 <head>
   <title>课程表</title>
   <link rel="stylesheet" href="../../lib/css/iframe.css" type="text/css"/>
-  <script src="../../lib/js/jquery-1.11.1.min.js"></script>
   <script type="text/javascript">
 
 
@@ -62,72 +61,52 @@
 <body>
 
 
-<div >
-<form method="get" action='/web/home/class' >
-  <table id="classtable">
+<div>
+  <table  class="table table-bordered" >
     <tr style="background-color: #cccccc">
       <td id="ClassId" style="display: none">id</td>
       <td >课程</td>
-      
       <td >时间</td>
       <td >教练</td>
+      <td></td>
+      <td></td>
     </tr>
-    <!--<%-->
-      <!--List<Classinfo> clss = (List<Classinfo>) request.getAttribute("clsList");-->
-    <!--%>-->
-    <!--<%-->
-      <!--for (Classinfo cls : clss) {-->
-    <!--%>-->
-    <tr>
+    <tr ng-repeat="cls in clss">
 
-      <td><%=cls.getClassname()%></td>
-      <td><%=cls.getTime()%></td>
-      <td><%=cls.getCoach()%></td>
-      <td><input class="delBtn"  type="button" value="删除" data-id="<%=cls.getIdClass()%>"></td>
-      <td><input class="updateBtn" type="button" value="修改" data-id="<%=cls.getIdClass()%>" data-name="<%=cls.getClassname()%>"></td>
+      <td>{{cls.classname}}</td>
+      <td>{{cls.time}}</td>
+      <td>{{cls.coach}}</td>
+      <td><a ng-click="delCls(cls.idClass)">删除</a></td>
+      <td><a ng-click="updateCls(cls.idClass,cls.classname,cls.coach)">修改</a></td>
     </tr>
-    <!--<%-->
-      <!--}-->
-    <!--%>-->
+
   </table>
 
-</form>
 
-<form method="post" action='/web/home/class/add'>
-  <table style="margin: auto">
+  <h2 >添加新课程</h2>
+  <table style="border: none">
     <tr>
       <td>课程:</td>
-      <td><input name="classname" type="text"/></td>
+      <td><input name="classname" type="text" ng-model="cls.classname"/></td>
     </tr>
     <tr>
       <td>时间:</td>
-      <td><input name="time" type="date"/></td>
+      <td><input name="time" type="date" ng-model="cls.time"/></td>
 
     </tr>
     <tr>
-      <!--<td>教练:</td>-->
-      <!--<%&#45;&#45;<td><input name="coach" type="text"/></td>&#45;&#45;%>-->
-      <!--<td>-->
-        <!--<select name="coach">-->
-          <!--<%-->
-            <!--List<Employee> coach = (List<Employee>) request.getAttribute("coach");-->
-          <!--%>-->
-          <!--<%-->
-            <!--for (Employee c : coach) {-->
-          <!--%>-->
-          <!--<option><%=c.getName()%></option>-->
-          <!--<%-->
-            <!--}-->
-          <!--%>-->
-        <!--</select>-->
-      <!--</td>-->
-      <td><input name="submit" type="submit" value="添加" /></td>
+      <td>教练:</td>
+      <td>
+        <select name="coach" ng-model="cls.coach">
+
+          <option ng-repeat="coach in coachs">{{coach.name}}</option>
+
+        </select>
+      <button  type="button" ng-click="addCls(cls)" >添加</button></td>
     </tr>
   </table>
-</form>
-
-<form id="updateform" method="post" action='/web/home/class/update'>>
-  <table id="updateTable">
+<br/>
+  <table id="updateTable" style="border: none;">
     <tr>
       <td>课程:</td>
       <td style="display: none">
@@ -143,23 +122,12 @@
     <tr>
       <td>教练:</td>
       <td>
-        <select name="updatecoach">
-          <!--<%-->
-            <!--List<Employee> uopdatecoach = (List<Employee>) request.getAttribute("coach");-->
-          <!--%>-->
-          <!--<%-->
-            <!--for (Employee c : uopdatecoach) {-->
-          <!--%>-->
-          <!--<option><%=c.getName()%></option>-->
-          <!--<%-->
-            <!--}-->
-          <!--%>-->
+        <select id="updatecoach">
+          <option ng-repeat="coach in coachs">{{coach.name}}</option>
         </select>
-      </td>
-      <td><button id="reupdate" >修改</button></td>
+      <button id="reupdate" >修改</button></td>
     </tr>
   </table>
-</form>
 
 </div>
 </body>
